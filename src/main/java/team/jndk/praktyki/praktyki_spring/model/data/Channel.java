@@ -13,15 +13,22 @@ import java.util.Set;
 
 
 @Table(name = "Channels")
+@Entity
 @Data
 @RequiredArgsConstructor
 public class Channel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private int id;
+
     @NotBlank
+    @Column(name = "GoogleChanID")
     private final String googleId;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(referencedColumnName = "GoogleChanID", name = "ChanID")
     private final Set<Video> videos = new HashSet<>();
 
     private Channel() {

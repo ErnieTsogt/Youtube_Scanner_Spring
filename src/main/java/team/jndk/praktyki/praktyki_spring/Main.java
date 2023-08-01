@@ -29,10 +29,10 @@ public class Main {
 
         DataGeneratorDao dataSaver = new DBGeneratorDaoImpl(url);
 
-        List<Channel> channels = DataGenerator.generateChannels(Integer.parseInt(prop.getProperty("num_channels")));
+//        List<Channel> channels = DataGenerator.generateChannels(Integer.parseInt(prop.getProperty("num_channels")));
 
 
-        dataSaver.saveChannels(channels);
+//        dataSaver.saveChannels(channels);
     }
 
 

@@ -23,7 +23,7 @@ public class DaoService {
     @Autowired
     private DataGenerator dataGenerator;
 
-    @Value("num_channels")
+    @Value("${num_channels}")
     private Integer numChannels;
 
     public List<Channel> getAllChannels() {

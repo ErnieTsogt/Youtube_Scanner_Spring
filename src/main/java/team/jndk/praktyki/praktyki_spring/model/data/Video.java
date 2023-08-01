@@ -8,13 +8,16 @@ import javax.validation.constraints.*;
 import java.util.Date;
 
 @Table(name = "Videos")
+@Entity
 @Data
 @RequiredArgsConstructor
 public class Video {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private int id;
+
     @NotBlank
     private final String title;
     @NotBlank
