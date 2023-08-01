@@ -35,7 +35,9 @@ public class DaoService {
     }
 
     public void startScan() {
-        dataGenerator.generateChannels(numChannels);
+        List<Channel> channels = dataGenerator.generateChannels(numChannels);
+        channelRepository.saveAll(channels);
+        channels.forEach(channel -> videoRepository.saveAll(channel.getVideos()));
     };
 
 }
