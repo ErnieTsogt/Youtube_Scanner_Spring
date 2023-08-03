@@ -1,9 +1,7 @@
 package team.jndk.praktyki.praktyki_spring.model.data.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import team.jndk.praktyki.praktyki_spring.model.data.Channel;
 import team.jndk.praktyki.praktyki_spring.model.data.Video;
 import team.jndk.praktyki.praktyki_spring.model.data.service.DaoService;
@@ -16,8 +14,9 @@ public class GeneratorController {
     @Autowired
     private DaoService daoService;
 
-    @GetMapping("/channels")
-    public List<Channel> kanal() { //wyswietlanie zawartosc
+    @GetMapping("/channels/{id}")
+    @ResponseBody
+    public List<Channel> kanal(@PathVariable String id) { //wyswietlanie zawartosc
         System.out.println("Received GET request!!");
         return daoService.getAllChannels();
     }

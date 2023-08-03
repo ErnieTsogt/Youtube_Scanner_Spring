@@ -6,6 +6,6 @@ import team.jndk.praktyki.praktyki_spring.model.data.Channel;
 
 import java.nio.channels.Channels;
 
-//@Repository
+@Repository
 public interface ChannelRepository extends JpaRepository<Channel, Integer> {
 }

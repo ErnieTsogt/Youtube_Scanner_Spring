@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import team.jndk.praktyki.praktyki_spring.model.data.Channel;
 import team.jndk.praktyki.praktyki_spring.model.data.Video;
 
-//@Repository
+@Repository
 public interface VideoRepository extends JpaRepository<Video, Integer> {
 }
