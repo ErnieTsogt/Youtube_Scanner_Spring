@@ -32,5 +32,4 @@ public class GeneratorController {
         daoService.startScan();
         return "Data generated!";
     }
-// GET z konkretnym channelem i jego zawartosc
 }

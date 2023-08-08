@@ -35,6 +35,3 @@ build/
 .vscode/
 
 .DS_Store
-.mvn/wrapper
-mvnw
-mvnw.cmd

@@ -32,7 +32,7 @@ public class DataGenerator {
         return channels;
     }
 
-    private static void populateVideos(List<Channel> channels) {
+    private void populateVideos(List<Channel> channels) {
         Random random = new Random();
 
         for (Channel channel : channels) {
