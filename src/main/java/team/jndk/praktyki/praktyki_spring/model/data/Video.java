@@ -27,11 +27,11 @@ public class Video {
     private final int likes;
     @Min(0)
     private final int comments;
+    @Min(0)
+    private final int views;
     @NotBlank
     @Column(name = "scanned_date")
     private final long scannedDate;
-    @Min(0)
-    private final int views;
 
     private Video() {
         title = "";

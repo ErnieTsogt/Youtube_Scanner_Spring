@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import team.jndk.praktyki.praktyki_spring.controller.GeneratorController;
 import team.jndk.praktyki.praktyki_spring.model.data.Channel;
+import team.jndk.praktyki.praktyki_spring.model.data.Video;
 import team.jndk.praktyki.praktyki_spring.service.DaoService;
 
 import java.util.Arrays;
@@ -17,8 +18,9 @@ import java.util.List;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-@Ignore
+
 @WebMvcTest(GeneratorController.class)
 class GeneratorControllerTest {
 
@@ -29,19 +31,25 @@ class GeneratorControllerTest {
     @Test
     void canal() throws Exception {
         // Given
-        String channelId = "Channel1";
-        // Przykładowa lista kanałów do zwrócenia przez serwis DAO
-        List<Channel> channels = Arrays.asList(new Channel( "Channel1", "Channel1"), new Channel("","Channel2"));
+        List<Channel> channels = Arrays.asList(new Channel( "Channel1", "googleid1"), new Channel("Channel2","googleid2"));
         when(daoService.getAllChannels()).thenReturn(channels);
 
         // When/Then
-        mockMvc.perform(get("/channels/" + channelId))
-                .andExpect(status().isOk());
-        // Możesz także dodać dodatkowe asercje, aby sprawdzić odpowiedź serwera na przykład zawartość odpowiedzi.
+        mockMvc.perform(get("/channels"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(channels.size()));
     }
 
     @Test
-    void film() {
+    void film() throws Exception{
+        List<Video> videos = Arrays.asList(new Video("JavaTutorial", "Lekcja1", 13, 20, 10, 1231223123L)
+        , new Video("stalin", "421idasd", 13, 450, 3400, 234235235235L));
+        when(daoService.getAllVideos()).thenReturn(videos);
+
+        // When/Then
+        mockMvc.perform(get("/videos"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(videos.size()));
     }
 
     @Test
