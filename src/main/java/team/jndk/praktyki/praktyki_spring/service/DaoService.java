@@ -1,4 +1,4 @@
-package team.jndk.praktyki.praktyki_spring.model.data.service;
+package team.jndk.praktyki.praktyki_spring.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import team.jndk.praktyki.praktyki_spring.model.data.Channel;
 import team.jndk.praktyki.praktyki_spring.model.data.DataGenerator;
 import team.jndk.praktyki.praktyki_spring.model.data.Video;
-import team.jndk.praktyki.praktyki_spring.model.data.repository.ChannelRepository;
-import team.jndk.praktyki.praktyki_spring.model.data.repository.VideoRepository;
+import team.jndk.praktyki.praktyki_spring.repository.ChannelRepository;
+import team.jndk.praktyki.praktyki_spring.repository.VideoRepository;
 
 import java.util.List;
 

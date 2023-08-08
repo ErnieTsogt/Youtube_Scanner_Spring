@@ -78,7 +78,7 @@ public class DataGenerator {
                 int randomDays = random.nextInt(1, 5);
                 long scannedDate = previous == null ? random.nextLong(System.currentTimeMillis() - randomDays * TWO_DAYS_MILLIS, System.currentTimeMillis())
                         : random.nextLong(previous.getScannedDate(), System.currentTimeMillis()); // Random scanned date
-                Video video = new Video(videoTitle, id, views, likes, comments, scannedDate);
+                Video video = new Video(videoTitle, id, likes, comments, scannedDate, views);
                 channel.addVideos(video);
             }
         }

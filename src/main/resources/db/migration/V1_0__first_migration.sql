@@ -1,20 +1,20 @@
-create table if not exists Videos
+create table if not exists videos
 (
-    ID          integer primary key autoincrement,
+    id          integer primary key autoincrement,
     title       text,
     views       int,
     likes       int,
     comments    int,
-    scannedDate datetime,
-    ChanID      INTEGER
-        constraint Videos_Channels_ID_fk
-            references Channels,
-    GoogleVidID text
+    scanned_date datetime,
+    chan_id      INTEGER
+        constraint videos_channels_id_fk
+            references channels,
+    google_vid_id text
 );
 
-create table if not exists Channels
+create table if not exists channels
 (
-    ID           INTEGER primary key autoincrement,
-    ChannelNames text,
-    GoogleChanID text unique
+    id           INTEGER primary key autoincrement,
+    channel_names text,
+    google_chan_id text unique
 );

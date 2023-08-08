@@ -15,21 +15,23 @@ public class Video {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "id")
     private int id;
 
     @NotBlank
     private final String title;
     @NotBlank
+    @Column(name = "google_vid_id")
     private final String googleId;
-    @Min(0)
-    private final int views;
     @Min(0)
     private final int likes;
     @Min(0)
     private final int comments;
     @NotBlank
+    @Column(name = "scanned_date")
     private final long scannedDate;
+    @Min(0)
+    private final int views;
 
     private Video() {
         title = "";

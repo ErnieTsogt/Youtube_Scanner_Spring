@@ -20,19 +20,19 @@ public class Channel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "id")
     private int id;
 
     @NotBlank
-    @Column(name = "ChannelNames")
+    @Column(name = "channel_names")
     private final String ChannelName;
     @NotBlank
-    @Column(name = "GoogleChanID")
+    @Column(name = "google_chan_id")
     private final String googleId;
 
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(referencedColumnName = "ID", name = "ChanID")
+    @JoinColumn(referencedColumnName = "id", name = "chan_id")
     private final Set<Video> videos = new HashSet<>();
 
     public Channel() {
