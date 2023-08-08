@@ -24,14 +24,19 @@ public class Channel {
     private int id;
 
     @NotBlank
+    @Column(name = "ChannelNames")
+    private final String ChannelName;
+    @NotBlank
     @Column(name = "GoogleChanID")
     private final String googleId;
 
+
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(referencedColumnName = "GoogleChanID", name = "ChanID")
+    @JoinColumn(referencedColumnName = "ID", name = "ChanID")
     private final Set<Video> videos = new HashSet<>();
 
-    private Channel() {
+    public Channel() {
+        ChannelName = "";
         googleId = "";
     }
 

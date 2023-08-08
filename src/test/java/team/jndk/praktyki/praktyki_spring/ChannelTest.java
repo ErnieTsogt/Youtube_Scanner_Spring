@@ -10,7 +10,7 @@ public class ChannelTest {
 
     @Test
     public void testIdenticalEntries() {
-        Channel addVid = new Channel("id");
+        Channel addVid = new Channel("id","channel123");
         Video video = new Video("JavaTutorial", "kot", 20000, 20,10,1231223123L);
         //addVid.addVideos(video);
         addVid.addVideos(new Video("JavaTutorial", "pies", 20000, 20,10,1231223123L));

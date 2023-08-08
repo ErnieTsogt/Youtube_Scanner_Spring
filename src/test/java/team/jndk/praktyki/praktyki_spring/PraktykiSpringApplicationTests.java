@@ -8,6 +8,7 @@ class PraktykiSpringApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }

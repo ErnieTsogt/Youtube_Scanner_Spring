@@ -1,9 +1,9 @@
 package team.jndk.praktyki.praktyki_spring;
 
+import lombok.NonNull;
 import org.junit.Ignore;
 import org.junit.Test;
 import team.jndk.praktyki.praktyki_spring.model.data.Video;
-import team.jndk.praktyki.praktyki_spring.model.exception.NullParamException;
 
 import static junit.framework.TestCase.assertEquals;
 
@@ -17,7 +17,8 @@ public class VideoTest {
         assertEquals(title, video.getTitle());
     }
 
-    @Test(expected = NullParamException.class)
+    @Test
+    @NonNull
     @Ignore
     public void testTitleValues() {
         String title = null;
@@ -65,7 +66,7 @@ public class VideoTest {
     @Test
     public void testLikesValueZero() {
         int value = 0;
-        Video video = new Video("JavaTutorial", "Lekcja1", 20000, value ,10, 1231223123L);
+        Video video = new Video("JavaTutorial", "Lekcja1", 20000, value, 10, 1231223123L);
         assertEquals(value, video.getLikes());
     }
 
@@ -100,7 +101,8 @@ public class VideoTest {
         assertEquals(value, video.getComments());
     }
 
-    @Test(expected = NullParamException.class)
+    @Test
+    @NonNull
     @Ignore
     public void testScannedDataValues() {
         long value = 0;

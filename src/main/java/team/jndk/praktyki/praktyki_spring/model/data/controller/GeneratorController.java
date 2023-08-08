@@ -16,7 +16,7 @@ public class GeneratorController {
 
     @GetMapping("/channels/{id}")
     @ResponseBody
-    public List<Channel> kanal(@PathVariable String id) { //wyswietlanie zawartosc
+    public List<Channel> canal(@PathVariable String id) {
         System.out.println("Received GET request!!");
         return daoService.getAllChannels();
     }

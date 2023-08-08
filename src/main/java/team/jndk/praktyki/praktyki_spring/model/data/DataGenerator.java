@@ -11,7 +11,7 @@ public class DataGenerator {
 
         int numChannels = 2;
 
-        Channel channel = new Channel("id");
+        Channel channel = new Channel("channel7", "id");
         List<Channel> channels = generateChannels(numChannels);
 
         System.out.println(channels);
@@ -23,8 +23,9 @@ public class DataGenerator {
         List<Channel> channels = new ArrayList<>();
 
         for (int i = 1; i <= numChannels; i++) {
-            String channelId = "Channel " + i;
-            Channel channel = new Channel(channelId);
+            String channelName = "Channel" + i;
+            String googleID = "googleID" + i;
+            Channel channel = new Channel(channelName,googleID );
             channels.add(channel);
         }
         populateVideos(channels);
@@ -43,13 +44,13 @@ public class DataGenerator {
             for (i = 1; i <= numVideos; i++) {
                 int randomNumber = random.nextInt(2);
                 String id;
-                if (channel.getGoogleId().equals("Channel 1")) {
+                if (channel.getGoogleId().equals("Channel1")) {
                     if (i <= 3) {
                         videoTitle = "Tech";
                     } else {
                         videoTitle = "Kod";
                     }
-                } else if (channel.getGoogleId().equals("Channel 2")) {
+                } else if (channel.getGoogleId().equals("Channel2")) {
                     if (i <= 3) {
                         videoTitle = "Java";
                     } else {
