@@ -33,15 +33,15 @@ public class Channel {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(referencedColumnName = "id", name = "chan_id")
-    private final Set<Video> videos = new HashSet<>();
+    private final Set<YTVideo> YTVideos = new HashSet<>();
 
     public Channel() {
         ChannelName = "";
         googleId = "";
     }
 
-    public void addVideos(Video... videos) {
-        this.videos.addAll(Arrays.asList(videos));
+    public void addVideos(YTVideo... YTVideos) {
+        this.YTVideos.addAll(Arrays.asList(YTVideos));
     }
 
     @Override
@@ -49,7 +49,7 @@ public class Channel {
         return "Channel{" +
                 "id='" + id + "'\n" +
                 "googleId='" + googleId + "'\n" +
-                ", videos=\n" + videos.stream().sorted(Comparator.comparingLong(Video::getScannedDate)).toList() +
+                ", videos=\n" + YTVideos.stream().sorted(Comparator.comparingLong(YTVideo::getScannedDate)).toList() +
                 "} \n\n";
     }
 }

@@ -1,5 +1,6 @@
 package team.jndk.praktyki.praktyki_spring.model.data;
 
+import com.google.api.client.util.DateTime;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -10,8 +11,7 @@ import java.util.Date;
 @Table(name = "Videos")
 @Entity
 @Data
-@RequiredArgsConstructor
-public class Video {
+public class YTVideo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,13 +33,13 @@ public class Video {
     @Column(name = "scanned_date")
     private final long scannedDate;
 
-    private Video() {
-        title = "";
+    public YTVideo(String title, String videoId, int likes, int comments, int views, long scannedDate) {
+        this.title = "";
         googleId = "";
-        views = Integer.MIN_VALUE;
-        likes = Integer.MIN_VALUE;
-        comments = Integer.MIN_VALUE;
-        scannedDate = Long.MIN_VALUE;
+        this.views = Integer.MIN_VALUE;
+        this.likes = Integer.MIN_VALUE;
+        this.comments = Integer.MIN_VALUE;
+        this.scannedDate = Long.MIN_VALUE;
     }
 
     @Override

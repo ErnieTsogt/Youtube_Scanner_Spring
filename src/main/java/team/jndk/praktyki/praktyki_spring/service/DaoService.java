@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import team.jndk.praktyki.praktyki_spring.model.data.Channel;
 import team.jndk.praktyki.praktyki_spring.model.data.DataGenerator;
-import team.jndk.praktyki.praktyki_spring.model.data.Video;
+import team.jndk.praktyki.praktyki_spring.model.data.YTVideo;
 import team.jndk.praktyki.praktyki_spring.repository.ChannelRepository;
 import team.jndk.praktyki.praktyki_spring.repository.VideoRepository;
 
@@ -30,14 +30,14 @@ public class DaoService {
         return channelRepository.findAll();
     }
 
-    public List<Video> getAllVideos() {
+    public List<YTVideo> getAllVideos() {
         return videoRepository.findAll();
     }
 
     public void startScan() {
         List<Channel> channels = dataGenerator.generateChannels(numChannels);
         channelRepository.saveAll(channels);
-        channels.forEach(channel -> videoRepository.saveAll(channel.getVideos()));
+        channels.forEach(channel -> videoRepository.saveAll(channel.getYTVideos()));
     };
 
 }
