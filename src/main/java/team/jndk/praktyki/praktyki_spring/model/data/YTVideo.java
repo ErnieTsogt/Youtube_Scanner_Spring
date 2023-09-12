@@ -1,14 +1,13 @@
 package team.jndk.praktyki.praktyki_spring.model.data;
 
-import com.google.api.client.util.DateTime;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
-@Table(name = "Videos")
+@Table(name = "YTVideos")
 @Entity
 @Data
 public class YTVideo {
@@ -19,28 +18,36 @@ public class YTVideo {
     private int id;
 
     @NotBlank
-    private final String title;
+    private String title;
     @NotBlank
     @Column(name = "google_vid_id")
-    private final String googleId;
+    private String googleId;
     @Min(0)
-    private final int likes;
+    private int likes;
     @Min(0)
-    private final int comments;
+    private int comments;
     @Min(0)
-    private final int views;
+    private int views;
     @NotBlank
     @Column(name = "scanned_date")
-    private final long scannedDate;
+    private long scannedDate;
+    @ManyToOne
+    @JoinColumn(name = "chan_id")
+    private Channel channel;
 
     public YTVideo(String title, String videoId, int likes, int comments, int views, long scannedDate) {
-        this.title = "";
-        googleId = "";
-        this.views = Integer.MIN_VALUE;
-        this.likes = Integer.MIN_VALUE;
-        this.comments = Integer.MIN_VALUE;
-        this.scannedDate = Long.MIN_VALUE;
+        this.title= title;
+        this.googleId = videoId;
+        this.views = views;
+        this.likes = likes;
+        this.comments = comments;
+        this.scannedDate = scannedDate;
     }
+
+    public YTVideo() {
+
+    }
+
 
     @Override
     public String toString() {

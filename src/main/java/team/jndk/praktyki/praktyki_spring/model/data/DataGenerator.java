@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 @Component
+
 public class DataGenerator {
 
     private static final long TWO_DAYS_MILLIS = 172800000;

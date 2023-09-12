@@ -11,7 +11,6 @@ public class ytConfig {
 
     @Bean
     public YouTube youTube() {
-        // Create and configure the YouTube object
         return new YouTube.Builder(
                 new NetHttpTransport(), new JacksonFactory(), request -> {})
                 .setApplicationName("ytDataScanner")

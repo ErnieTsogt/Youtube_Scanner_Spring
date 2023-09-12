@@ -6,16 +6,12 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 @Table(name = "Channels")
 @Entity
 @Data
-@RequiredArgsConstructor
 public class Channel {
 
     @Id
@@ -25,19 +21,24 @@ public class Channel {
 
     @NotBlank
     @Column(name = "channel_names")
-    private final String ChannelName;
+    private String ChannelName;
     @NotBlank
     @Column(name = "google_chan_id")
-    private final String googleId;
+    private String googleId;
+
 
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(referencedColumnName = "id", name = "chan_id")
     private final Set<YTVideo> YTVideos = new HashSet<>();
 
+    public Channel(String channelName, String googleId) {
+        this.ChannelName =channelName ;
+        this.googleId = googleId;
+    }
+
     public Channel() {
-        ChannelName = "";
-        googleId = "";
+
     }
 
     public void addVideos(YTVideo... YTVideos) {
