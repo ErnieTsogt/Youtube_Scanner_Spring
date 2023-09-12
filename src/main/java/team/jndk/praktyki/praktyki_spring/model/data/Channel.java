@@ -6,16 +6,12 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 @Table(name = "Channels")
 @Entity
 @Data
-@RequiredArgsConstructor
 public class Channel {
 
     @Id
@@ -25,23 +21,28 @@ public class Channel {
 
     @NotBlank
     @Column(name = "channel_names")
-    private final String ChannelName;
+    private String ChannelName;
     @NotBlank
     @Column(name = "google_chan_id")
-    private final String googleId;
+    private String googleId;
+
 
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(referencedColumnName = "id", name = "chan_id")
-    private final Set<Video> videos = new HashSet<>();
+    private final Set<YTVideo> YTVideos = new HashSet<>();
 
-    public Channel() {
-        ChannelName = "";
-        googleId = "";
+    public Channel(String channelName, String googleId) {
+        this.ChannelName =channelName ;
+        this.googleId = googleId;
     }
 
-    public void addVideos(Video... videos) {
-        this.videos.addAll(Arrays.asList(videos));
+    public Channel() {
+
+    }
+
+    public void addVideos(YTVideo... YTVideos) {
+        this.YTVideos.addAll(Arrays.asList(YTVideos));
     }
 
     @Override
@@ -49,7 +50,7 @@ public class Channel {
         return "Channel{" +
                 "id='" + id + "'\n" +
                 "googleId='" + googleId + "'\n" +
-                ", videos=\n" + videos.stream().sorted(Comparator.comparingLong(Video::getScannedDate)).toList() +
+                ", videos=\n" + YTVideos.stream().sorted(Comparator.comparingLong(YTVideo::getScannedDate)).toList() +
                 "} \n\n";
     }
 }

@@ -1,4 +1,4 @@
-create table if not exists videos
+create table if not exists YTVideos
 (
     id          integer primary key autoincrement,
     title       text,

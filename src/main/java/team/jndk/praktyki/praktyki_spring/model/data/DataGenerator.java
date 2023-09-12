@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 @Component
+
 public class DataGenerator {
 
     private static final long TWO_DAYS_MILLIS = 172800000;
@@ -63,10 +64,10 @@ public class DataGenerator {
                 } else {
                     id = id2; // Drugi kod UUID
                 }
-                Video previous = channel.getVideos()
+                YTVideo previous = channel.getYTVideos()
                         .stream()
                         .filter(vid -> vid.getGoogleId().equals(id))
-                        .sorted(Comparator.comparingLong(Video::getScannedDate).reversed())
+                        .sorted(Comparator.comparingLong(YTVideo::getScannedDate).reversed())
                         .findFirst()
                         .orElse(null);
                 int viewsLast = previous == null ? 1000 : previous.getViews();
@@ -78,8 +79,8 @@ public class DataGenerator {
                 int randomDays = random.nextInt(1, 5);
                 long scannedDate = previous == null ? random.nextLong(System.currentTimeMillis() - randomDays * TWO_DAYS_MILLIS, System.currentTimeMillis())
                         : random.nextLong(previous.getScannedDate(), System.currentTimeMillis()); // Random scanned date
-                Video video = new Video(videoTitle, id, likes, comments, views, scannedDate);
-                channel.addVideos(video);
+                YTVideo YTVideo = new YTVideo(videoTitle, id, likes, comments, views, scannedDate);
+                channel.addVideos(YTVideo);
             }
         }
     }
