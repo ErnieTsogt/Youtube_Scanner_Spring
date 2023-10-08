@@ -22,7 +22,6 @@ public class GeneratorController {
     private ytService ytService;
 
     @GetMapping("/channels")
-    @ResponseBody
     public List<Channel> canal() {
         System.out.println("Received GET request!!");
         return daoService.getAllChannels();
