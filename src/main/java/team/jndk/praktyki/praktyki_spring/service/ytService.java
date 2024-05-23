@@ -31,8 +31,6 @@ public class ytService {
     @Value("${youtube.api.key}")
     private String apiKey;
 
-    @Value("${channel_ID}")
-    private String channelId;
 
 
     @Autowired
@@ -45,7 +43,7 @@ public class ytService {
     }
 
 
-    public void fetchAndSaveVideos() {
+    public void fetchAndSaveVideos(String channelId) {
         try {
             YouTube.Channels.List channelRequest = youtube.channels().list("snippet");
             channelRequest.setKey(apiKey);
@@ -55,7 +53,6 @@ public class ytService {
             List<Channel> channels = channelResponse.getItems();
             Channel channel = channels.get(0);
             String channelTitle = channel.getSnippet().getTitle();
-            String channelId = channel.getId();
             team.jndk.praktyki.praktyki_spring.model.data.Channel chan = new team.jndk.praktyki.praktyki_spring.model.data.Channel(channelTitle,channelId);
 
             if (!channels.isEmpty()) {

@@ -2,10 +2,7 @@ package team.jndk.praktyki.praktyki_spring.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import team.jndk.praktyki.praktyki_spring.model.data.Channel;
 import team.jndk.praktyki.praktyki_spring.model.data.YTVideo;
 import team.jndk.praktyki.praktyki_spring.service.DaoService;
@@ -33,9 +30,9 @@ public class GeneratorController {
         return daoService.getAllVideos();
     }
 
-    @PostMapping ("/start")
-    public String fetchAndSaveVideos() {
-        ytService.fetchAndSaveVideos();
-        return "Videos fetched and saved!";
+    @PostMapping ("/start/{channelId}")
+    public String fetchAndSaveVideos(@PathVariable String channelId) {
+        ytService.fetchAndSaveVideos(channelId);
+        return "Videos fetched and saved for channel ID: " + channelId;
     }
 }
