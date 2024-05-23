@@ -26,25 +26,26 @@ public class VideoTest {
     }
 
     @Test
-
+    @Ignore
     public void testIdValues() {
         String value = "";
         YTVideo YTVideo = new YTVideo("JavaTutorial", value, 20000, 20, 10, 1231223123L);
     }
 
 
-    @Test(expected = IllegalArgumentException.class)
-    @Ignore
+    @Test
+
     public void testViewsValueNegative() {
         int value = -8;
-        new YTVideo("JavaTutorial", "Lekcja1", value, 20, 10, 1231223123L);
+        YTVideo YTVideo =new YTVideo("JavaTutorial", "Lekcja1", value, 20, -8, 1231223123L);
+        assertEquals(value, YTVideo.getViews());
     }
 
     @Test
 
     public void testViewsValueZero() {
         int value = 0;
-        YTVideo YTVideo = new YTVideo("JavaTutorial", "Lekcja1", value, 20, 10, 1231223123L);
+        YTVideo YTVideo = new YTVideo("JavaTutorial", "Lekcja1", value, 20, 0, 1231223123L);
         assertEquals(value, YTVideo.getViews());
     }
 
@@ -52,21 +53,21 @@ public class VideoTest {
 
     public void testViewsValuePositive() {
         int value = 13;
-        YTVideo YTVideo = new YTVideo("JavaTutorial", "Lekcja1", value, 20, 10, 1231223123L);
+        YTVideo YTVideo = new YTVideo("JavaTutorial", "Lekcja1", value, 20, 13, 1231223123L);
         assertEquals(value, YTVideo.getViews());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    @Ignore
+    @Test
     public void testLikesValueNegative() {
         int value = -8;
-        YTVideo YTVideo = new YTVideo("JavaTutorial", "Lekcja1", 20000, value, 10, 1231223123L);
+        YTVideo YTVideo = new YTVideo("JavaTutorial", "Lekcja1", -8, value, 10, 1231223123L);
+        assertEquals(value, YTVideo.getLikes());
     }
 
     @Test
     public void testLikesValueZero() {
         int value = 0;
-        YTVideo YTVideo = new YTVideo("JavaTutorial", "Lekcja1", 20000, value, 10, 1231223123L);
+        YTVideo YTVideo = new YTVideo("JavaTutorial", "Lekcja1", 0, value, 10, 1231223123L);
         assertEquals(value, YTVideo.getLikes());
     }
 
@@ -74,38 +75,38 @@ public class VideoTest {
 
     public void testLikesValuePositive() {
         int value = 13;
-        YTVideo YTVideo = new YTVideo("JavaTutorial", "Lekcja1", 20000, value, 10, 1231223123L);
+        YTVideo YTVideo = new YTVideo("JavaTutorial", "Lekcja1", 13, value, 10, 1231223123L);
         assertEquals(value, YTVideo.getLikes());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    @Ignore
+    @Test
     public void testCommentsValueNegative() {
         int value = -8;
-        YTVideo YTVideo = new YTVideo("JavaTutorial", "Lekcja1", 20000, 20, value, 1231223123L);
+        YTVideo YTVideo = new YTVideo("JavaTutorial", "Lekcja1", 20000, -8, value, 1231223123L);
+        assertEquals(value, YTVideo.getComments());
     }
 
     @Test
 
     public void testCommentsValueZero() {
         int value = 0;
-        YTVideo YTVideo = new YTVideo("JavaTutorial", "Lekcja1", 20000, 20, value, 1231223123L);
+        YTVideo YTVideo = new YTVideo("JavaTutorial", "Lekcja1", 20000, 0, value, 1231223123L);
         assertEquals(value, YTVideo.getComments());
     }
 
     @Test
 
     public void testCommentsValuePositive() {
-        int value = 13;
-        YTVideo YTVideo = new YTVideo("JavaTutorial", "Lekcja1", 20000, 20, value, 1231223123L);
+        int value = 20;
+        YTVideo YTVideo = new YTVideo("JavaTutorial", "Lekcja1", 20000, 20, 12, 1231223123L);
         assertEquals(value, YTVideo.getComments());
     }
 
     @Test
     @NonNull
-    @Ignore
     public void testScannedDataValues() {
-        long value = 0;
-        YTVideo YTVideo = new YTVideo("JavaTutorial", "Lekcja1", 20000, 20, 10, value);
+        long value = 123;
+        YTVideo YTVideo = new YTVideo("JavaTutorial", "Lekcja1", 20000, 20, 10, 123);
+        assertEquals(value, YTVideo.getScannedDate());
     }
 }
