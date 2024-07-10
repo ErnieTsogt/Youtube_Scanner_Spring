@@ -1,6 +1,6 @@
 # Opis Projektu:
 
-YouTube Data Fetcher to aplikacja napisana w języku Java 17, której celem jest pobieranie i zarządzanie danymi z YouTube. Aplikacja wykorzystuje framework Spring Boot, narzędzie do zarządzania zależnościami Maven oraz bazę danych SQLite (z planowanym przejściem na MySQL). W przyszłości projekt będzie również zintegrowany z Dockerem oraz Apache Spark, aby zapewnić skalowalność i wydajność przetwarzania danych.
+YouTube Scanner to aplikacja napisana w języku Java 17, której celem jest pobieranie i zarządzanie danymi z YouTube. Aplikacja wykorzystuje framework Spring Boot, narzędzie do zarządzania zależnościami Maven oraz bazę danych SQLite (z planowanym przejściem na MySQL). W przyszłości projekt będzie również zintegrowany z Dockerem oraz Apache Spark, aby zapewnić skalowalność i wydajność przetwarzania danych.
 
 # Cel Projektu:
 
