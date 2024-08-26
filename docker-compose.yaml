@@ -1,0 +1,30 @@
+#version: "2.91.1"
+services:
+  mysql-db:
+    image: mysql:latest
+    container_name: "mysql-db"
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "*******"
+      MYSQL_DATABASE: "ytScanDB"
+  spring-app:
+    build: .
+    ports:
+      - "9090:8080"
+    environment:
+      MYSQL_HOST: "mysql-db"
+      MYSQL_USER: "root"
+      MYSQL_PASSWORD: "*******"
+    depends_on:
+      - "mysql-db"
+  spark:
+    image: my-spark-app
+    container_name: spark-app
+    ports:
+      - "4040:4040"
+    environment:
+      - SPARK_MODE=local
+      - SPARK_JDBC_DRIVER=com.mysql.cj.jdbc.Driver
+    depends_on:
+      - "mysql-db"
