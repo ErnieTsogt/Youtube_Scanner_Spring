@@ -66,7 +66,7 @@ public class ytService {
             searchRequest.setKey(apiKey);
             searchRequest.setChannelId(channelId);
             searchRequest.setType("video");
-            searchRequest.setMaxResults(50L);
+            searchRequest.setMaxResults(1000L);
 
 
             SearchListResponse searchResponse = searchRequest.execute();
