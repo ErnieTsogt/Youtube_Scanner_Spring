@@ -16,6 +16,6 @@ public class ChannelTest {
         addVid.addVideos(new YTVideo("JavaTutorial", "pies", 20000, 20,10,1231223123L));
         addVid.addVideos(new YTVideo("JavaTutorial", "pies", 20040, 21,10,1234223123L));
 
-        assertEquals(2, addVid.getYTVideos().size());
+        assertEquals(2, addVid.getYtVideos().size());
     }
 }

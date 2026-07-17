@@ -1,56 +1,160 @@
-# Opis Projektu:
+# YouTube Scanner Analytics - Backend
 
-YouTube Scanner to aplikacja napisana w języku Java 17, której celem jest pobieranie i zarządzanie danymi z YouTube. Aplikacja wykorzystuje framework Spring Boot, narzędzie do zarządzania zależnościami Maven oraz bazę danych SQLite (z planowanym przejściem na MySQL). W przyszłości projekt będzie również zintegrowany z Dockerem oraz Apache Spark, aby zapewnić skalowalność i wydajność przetwarzania danych.
+Backend aplikacji do skanowania kanałów YouTube, zapisywania historii zmian i udostępniania danych analitycznych dla frontendu Vue.
 
-# Cel Projektu:
+**Status**: aktualne względem bieżącej implementacji  
+**Stack**: Java 17, Spring Boot, MySQL, Flyway, Docker Compose
 
-Automatyczne pobieranie danych z YouTube, takich jak informacje o filmach, komentarzach, liczbach wyświetleń, polubieniach, itd.
-Przechowywanie pobranych danych w bazie danych.
-Udostępnianie interfejsu API do przeglądania i zarządzania danymi.
-Zwiększenie skalowalności i wydajności poprzez użycie Dockera i Apache Spark.
-# Technologie:
+Pełna wspólna dokumentacja projektu znajduje się w `../DOKUMENTACJA.md`.
 
-- Język programowania: Java 17
-- Framework: Spring Boot
-- Zarządzanie zależnościami: Maven
-- Baza danych: SQLite (z planowanym przejściem na MySQL)
-- Konteneryzacja: Docker (wkrótce)
-- Przetwarzanie danych: Apache Spark (wkrótce)
+## Najważniejsze funkcje
 
-# Funkcje:
+- pobieranie danych kanału i filmów z YouTube API,
+- zapisywanie aktualnych danych filmów oraz ich historycznych snapshotów,
+- analityka kanałów, filmów i trendów,
+- ręczne skanowanie kanału,
+- automatyczne skanowanie według `intervalDays + HH:mm`,
+- backup danych do pliku JSON,
+- restore backupu w trybie merge/upsert,
+- usuwanie skanów kanału lub całego kanału razem z zależnymi danymi.
 
-Pobieranie danych:
-Automatyczne pobieranie danych z YouTube przy użyciu YouTube Data API.
-Możliwość pobierania danych o filmach, kanałach, komentarzach i innych metadanych.
-Przechowywanie danych:
-Przechowywanie pobranych danych w bazie danych SQLite, z planowanym przejściem na MySQL.
-API RESTful:
-Udostępnianie interfejsu API do przeglądania, wyszukiwania i zarządzania pobranymi danymi.
-Przyszłe funkcje:
-Integracja z Dockerem w celu konteneryzacji aplikacji.
-Wdrożenie Apache Spark w celu wydajnego przetwarzania danych.
+## Architektura
 
-# kontrolerów:
+```text
+Frontend (Vue 3, port 3000)
+        ↓
+Backend (Spring Boot, port 9090 w Docker / 8080 lokalnie)
+        ↓
+MySQL 8 (port 3308 w Docker)
+```
 
-**GET /channels:**
+## Moduły backendu
 
-Endpoint, który zwraca listę wszystkich kanałów przechowywanych w bazie danych.
-Używa DaoService do pobrania danych kanałów.
-Loguje odebranie żądania GET do konsoli.
+- `controller` - endpointy REST,
+- `service` - logika biznesowa, skanowanie i harmonogram,
+- `repository` - dostęp do bazy przez Spring Data JPA,
+- `model/data` - encje bazy danych,
+- `model/dto` - DTO używane przez API,
+- `src/main/resources/db/migration` - migracje Flyway.
 
+## Aktualne endpointy
 
-**GET /videos:**
+### Skanowanie i dane podstawowe
 
-Endpoint, który zwraca listę wszystkich filmów przechowywanych w bazie danych.
-Używa DaoService do pobrania danych filmów.
-Loguje odebranie żądania GET do konsoli.
+- `GET /channels`
+- `GET /videos`
+- `POST /start/{channelId}`
+- `POST /api/start/{channelId}`
+- `GET /api/channels`
+- `GET /api/videos`
+- `GET /api/scan-history`
 
+### Analityka
 
-**POST /start/{channelId}:**
+- `GET /api/analytics/channels`
+- `GET /api/analytics/videos?channel=&from=&to=&sortBy=&sortDir=&page=&size=`
+- `GET /api/analytics/video-stats-history?channel=&from=&to=&sortBy=&sortDir=&page=&size=`
+- `GET /api/analytics/trends?channel=&metric=&days=`
+- `GET /api/analytics/statistics?channel=`
+- `GET /api/analytics/comparison?channel=&metric=`
+- `DELETE /api/analytics/channel/{googleId}/videos`
+- `DELETE /api/analytics/channel/{googleId}`
 
-Endpoint, który uruchamia proces pobierania i zapisywania filmów dla określonego identyfikatora kanału.
-Używa ytService do pobrania i zapisania danych filmów.
-Zwraca komunikat potwierdzający wykonanie operacji.
+### Auto-skan
 
+- `GET /api/scan-config`
+- `PUT /api/scan-config?intervalDays=&time=HH:mm`
 
+Zwracana konfiguracja zawiera m.in.:
 
+- `intervalDays`,
+- `time`,
+- `cron`,
+- `lastAutoScanDate`,
+- `lastScanDate`,
+- `nextAutoScanAt`.
+
+Scheduler działa w strefie `Europe/Warsaw`.
+
+### Backup i restore
+
+- `GET /api/backup/export`
+- `POST /api/backup/restore` - `multipart/form-data`, pole `file`
+
+Restore działa jako **merge/upsert**:
+
+- nowe rekordy są dodawane,
+- istniejące duplikaty są nadpisywane,
+- rekordy nieobecne w pliku backupu nie są usuwane.
+
+## Baza danych
+
+Najważniejsze tabele:
+
+- `Channels`
+- `YTVideos`
+- `VideoSnapshots`
+- `ScanHistory`
+
+Migracje znajdują się w `src/main/resources/db/migration`.
+
+## Uruchomienie
+
+### Docker Compose
+
+Z katalogu `Youtube_Scanner_Spring`:
+
+```bash
+docker compose up -d --build
+```
+
+Dostęp:
+
+- frontend: `http://localhost:3000`
+- backend: `http://localhost:9090`
+- mysql: `localhost:3308`
+
+### Tryb lokalny
+
+Backend:
+
+```bash
+mvn clean install
+mvn spring-boot:run
+```
+
+Domyślnie backend działa lokalnie na `http://localhost:8080`.
+
+## Trwałość danych
+
+`docker-compose.yaml` używa nazwanego wolumenu `mysql_data`, więc dane MySQL pozostają po zwykłym `docker compose down`.
+
+Uwaga:
+
+- `docker compose down` - zatrzymuje kontenery, zachowuje dane,
+- `docker compose down -v` - usuwa także wolumen i całą bazę.
+
+## Najczęstsze scenariusze
+
+### Ręczny skan kanału
+
+```bash
+curl -X POST http://localhost:9090/api/start/UCX6OQ3DkcsbYNE6H8uQQuVA
+```
+
+### Odczyt konfiguracji auto-skana
+
+```bash
+curl http://localhost:9090/api/scan-config
+```
+
+### Ustawienie auto-skana co 3 dni o 02:30
+
+```bash
+curl -X PUT "http://localhost:9090/api/scan-config?intervalDays=3&time=02:30"
+```
+
+## Dokumenty powiązane
+
+- `../DOKUMENTACJA.md` - główna dokumentacja projektu,
+- `QUICK_START.md` - krótki odsyłacz do dokumentacji głównej.

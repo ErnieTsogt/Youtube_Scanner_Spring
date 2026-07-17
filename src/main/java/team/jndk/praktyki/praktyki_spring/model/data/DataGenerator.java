@@ -3,22 +3,13 @@ package team.jndk.praktyki.praktyki_spring.model.data;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-@Component
 
+@Component
 public class DataGenerator {
 
     private static final long TWO_DAYS_MILLIS = 172800000;
-    public void main(String[] args) {
 
-        int numChannels = 2;
-
-        Channel channel = new Channel("channel7", "id");
-        List<Channel> channels = generateChannels(numChannels);
-
-        System.out.println(channels);
-        System.exit(0);
-
-    }
+    // Usunięto nieużywany publiczny main - DataGenerator jest komponentem Spring i służy do generowania testowych danych
 
     public List<Channel> generateChannels(int numChannels) {
         List<Channel> channels = new ArrayList<>();
@@ -45,13 +36,14 @@ public class DataGenerator {
             for (i = 1; i <= numVideos; i++) {
                 int randomNumber = random.nextInt(2);
                 String id;
-                if (channel.getGoogleId().equals("Channel1")) {
+                // Poprawione porównania: porównujemy googleId z wygenerowanym patternem
+                if (channel.getGoogleId().equals("googleID1")) {
                     if (i <= 3) {
                         videoTitle = "Tech";
                     } else {
                         videoTitle = "Kod";
                     }
-                } else if (channel.getGoogleId().equals("Channel2")) {
+                } else if (channel.getGoogleId().equals("googleID2")) {
                     if (i <= 3) {
                         videoTitle = "Java";
                     } else {
@@ -64,7 +56,7 @@ public class DataGenerator {
                 } else {
                     id = id2; // Drugi kod UUID
                 }
-                YTVideo previous = channel.getYTVideos()
+                YTVideo previous = channel.getYtVideos()
                         .stream()
                         .filter(vid -> vid.getGoogleId().equals(id))
                         .sorted(Comparator.comparingLong(YTVideo::getScannedDate).reversed())
@@ -84,6 +76,5 @@ public class DataGenerator {
             }
         }
     }
-
 
 }

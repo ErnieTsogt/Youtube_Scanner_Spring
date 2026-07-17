@@ -1,6 +1,5 @@
 package team.jndk.praktyki.praktyki_spring;
 
-import lombok.NonNull;
 import org.junit.Ignore;
 import org.junit.Test;
 import team.jndk.praktyki.praktyki_spring.model.data.YTVideo;
@@ -18,7 +17,6 @@ public class VideoTest {
     }
 
     @Test
-    @NonNull
     @Ignore
     public void testTitleValues() {
         String title = null;
@@ -103,7 +101,6 @@ public class VideoTest {
     }
 
     @Test
-    @NonNull
     public void testScannedDataValues() {
         long value = 123;
         YTVideo YTVideo = new YTVideo("JavaTutorial", "Lekcja1", 20000, 20, 10, 123);

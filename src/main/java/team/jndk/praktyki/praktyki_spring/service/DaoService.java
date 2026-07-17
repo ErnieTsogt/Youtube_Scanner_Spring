@@ -1,5 +1,7 @@
 package team.jndk.praktyki.praktyki_spring.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class DaoService {
+
+    private static final Logger log = LoggerFactory.getLogger(DaoService.class);
 
     @Autowired
     private ChannelRepository channelRepository;
@@ -51,7 +55,11 @@ public class DaoService {
     public void startScan() {
         List<Channel> channels = dataGenerator.generateChannels(numChannels);
         channelRepository.saveAll(channels);
-        channels.forEach(channel -> videoRepository.saveAll(channel.getYTVideos()));
-    };
+        channels.forEach(channel -> videoRepository.saveAll(channel.getYtVideos()));
+        log.info("startScan: saved {} channels and videos", channels.size());
+    }
 
+    public Long getLastScanDate() {
+        return videoRepository.findLatestScannedDate().orElse(null);
+    }
 }

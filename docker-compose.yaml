@@ -1,30 +1,47 @@
-#version: "2.91.1"
+version: "3.8"
 services:
   mysql-db:
     image: mysql:latest
     container_name: "mysql-db"
     ports:
-      - "3307:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: "*******"
-      MYSQL_DATABASE: "ytScanDB"
+      - "3308:3306"
+    env_file:
+      - .env
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   spring-app:
     build: .
     ports:
       - "9090:8080"
-    environment:
-      MYSQL_HOST: "mysql-db"
-      MYSQL_USER: "root"
-      MYSQL_PASSWORD: "*******"
+    env_file:
+      - .env
     depends_on:
-      - "mysql-db"
-  spark:
-    image: my-spark-app
-    container_name: spark-app
+      mysql-db:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/ytScanDB
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=lokiuj123
+
+  frontend:
+    build: ../youtube-scanner-frontend
+    container_name: "youtube-scanner-frontend"
     ports:
-      - "4040:4040"
-    environment:
-      - SPARK_MODE=local
-      - SPARK_JDBC_DRIVER=com.mysql.cj.jdbc.Driver
+      - "3000:3000"
     depends_on:
-      - "mysql-db"
+      - spring-app
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  mysql_data:

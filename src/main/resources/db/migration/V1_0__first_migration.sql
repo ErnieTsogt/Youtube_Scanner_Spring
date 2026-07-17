@@ -1,10 +1,13 @@
+-- Ensure schema exists for portability (H2 tests)
+CREATE SCHEMA IF NOT EXISTS ytScanDB;
+
 CREATE TABLE IF NOT EXISTS ytScanDB.channels (
                                         id           INT AUTO_INCREMENT PRIMARY KEY,
                                         channel_names TEXT,
                                         google_chan_id TEXT
 );
 
-CREATE TABLE IF NOT EXISTS ytScanDB.YTVideos (
+CREATE TABLE IF NOT EXISTS ytScanDB.ytvideos (
                                         id          INT AUTO_INCREMENT PRIMARY KEY,
                                         title       TEXT,
                                         views       INT,
