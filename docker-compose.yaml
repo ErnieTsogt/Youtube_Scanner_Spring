@@ -27,7 +27,7 @@ services:
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/ytScanDB
       - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=lokiuj123
+      - SPRING_DATASOURCE_PASSWORD=${MYSQL_PASSWORD}
 
   frontend:
     build: ../youtube-scanner-frontend
